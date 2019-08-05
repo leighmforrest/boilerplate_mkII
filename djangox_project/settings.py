@@ -25,6 +25,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
+S3 = config('S3', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -95,7 +96,7 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASS'),
-        'HOST': 'localhost',
+        'HOST': config('DB_HOST'),
         'PORT': 5432
     }
 }
@@ -141,6 +142,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+# INSERT MEDIA FILE HANDLING HERE
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
