@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from decouple import config
+import dj_database_url
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -90,17 +91,17 @@ WSGI_APPLICATION = 'djangox_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASS'),
-        'HOST': config('DB_HOST'),
-        'PORT': 5432
-    }
-}
+DATABASES = {}
+user = config('DB_USER')
+password = config('DB_PASS')
+host = config('DB_HOST')
+name = config('DB_NAME')
 
+if DEBUG:
+    database_url = f"postgres://{user}:{password}@{host}:5432/{name}"
+else:
+    config('DATABASE_URL')
+DATABASES['default'] = dj_database_url.config(default=database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
