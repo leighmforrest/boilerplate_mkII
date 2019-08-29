@@ -91,17 +91,9 @@ WSGI_APPLICATION = 'djangox_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASES = {}
-user = config('DB_USER')
-password = config('DB_PASS')
-host = config('DB_HOST')
-name = config('DB_NAME')
-
-if DEBUG:
-    database_url = f"postgres://{user}:{password}@{host}:5432/{name}"
-else:
-    config('DATABASE_URL')
-DATABASES['default'] = dj_database_url.config(default=database_url)
+DATABASES = {
+    'default': dj_database_url.config(default='postgres://localhost/widgets')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -174,3 +166,10 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+
+# EMAIL SETTINGS
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = config('SENDGRID_API_KEY')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
